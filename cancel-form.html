@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<script src="config.js"></script>
 <style>
   :root{
     --sand:#F3EEE7;--sand-deep:#EAE3D8;--ink:#1C1B19;--ink-soft:#5C574F;
@@ -256,6 +257,13 @@
   }
   bindGroup('.seg input');bindGroup('.chip input');bindGroup('.scale input');
 
+  // send a submission to the Google Sheet (via Apps Script), if configured
+  function postToSheet(payload){
+    var url=window.PVOLVE_ENDPOINT||"";
+    if(!url) return;
+    try{fetch(url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});}catch(e){}
+  }
+
   var range=document.getElementById('range'),rv=document.getElementById('rangeval');
   range.addEventListener('input',function(){rv.textContent=range.value;});
 
@@ -281,7 +289,7 @@
     window.scrollTo({top:0,behavior:'smooth'});
   }
   document.getElementById('chooseCancel').addEventListener('click',function(){
-    pending.type='CANCEL';pending.freeze_offered=true;pending.chose_freeze=false;save(pending);finish();
+    pending.type='CANCEL';pending.freeze_offered=true;pending.chose_freeze=false;save(pending);postToSheet(pending);finish();
   });
   document.getElementById('chooseFreeze').addEventListener('click',function(){
     // carry the member's answers to the freeze form and let them finish there
