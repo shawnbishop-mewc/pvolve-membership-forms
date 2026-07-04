@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Membership Cancellation · Pvolve</title>
+<link rel="icon" href="pvolve-logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -263,6 +264,8 @@
     if(!url) return;
     try{fetch(url,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});}catch(e){}
   }
+  // once a live endpoint is configured, the "saved to this browser only" notice no longer applies
+  if(window.PVOLVE_ENDPOINT){var _pb=document.querySelector('.proto');if(_pb)_pb.style.display='none';}
 
   var range=document.getElementById('range'),rv=document.getElementById('rangeval');
   range.addEventListener('input',function(){rv.textContent=range.value;});

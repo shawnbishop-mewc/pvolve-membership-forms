@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Page Not Found · Pvolve</title>
+<link rel="icon" href="pvolve-logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--sand:#F3EEE7;--ink:#1C1B19;--ink-soft:#5C574F;--clay:#B15C3E;--line:#DAD2C4}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Jost',system-ui,sans-serif;background:var(--sand);color:var(--ink);font-weight:300;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
+  .brand{font-family:'Jost';font-weight:600;letter-spacing:.26em;text-transform:uppercase;font-size:19px;padding-left:.26em}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(40px,8vw,64px);line-height:1.05;margin:26px 0 10px}
+  p{color:var(--ink-soft);font-size:16px;max-width:400px;margin:0 auto}
+  .links{margin-top:32px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  a{display:inline-block;text-decoration:none;font-size:12px;letter-spacing:.16em;text-transform:uppercase;padding:14px 24px;border-radius:3px;transition:all .2s}
+  a.solid{background:var(--ink);color:#FBF9F5}
+  a.solid:hover{background:var(--clay)}
+  a.ghost{border:1px solid var(--line);color:var(--ink-soft)}
+  a.ghost:hover{border-color:var(--clay);color:var(--ink)}
+</style>
+</head>
+<body>
+  <div>
+    <div class="brand">Pvolve</div>
+    <h1>Page not found.</h1>
+    <p>The page you&rsquo;re looking for isn&rsquo;t here. Let&rsquo;s get you to the right place.</p>
+    <div class="links">
+      <a class="solid" href="/freeze">Freeze my membership</a>
+      <a class="ghost" href="/cancel">Cancellation request</a>
+    </div>
+  </div>
+</body>
+</html>

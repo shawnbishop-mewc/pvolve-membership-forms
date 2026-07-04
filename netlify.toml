@@ -1,0 +1,21 @@
+# Netlify configuration for the Pvolve membership forms
+
+# Clean, shareable URLs — the address bar stays pretty while serving the form file.
+#   pvolve-forms.netlify.app/freeze   ->  freeze-form.html
+#   pvolve-forms.netlify.app/cancel   ->  cancel-form.html
+[[redirects]]
+  from = "/freeze"
+  to = "/freeze-form.html"
+  status = 200
+
+[[redirects]]
+  from = "/cancel"
+  to = "/cancel-form.html"
+  status = 200
+
+# Light, sensible security headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
