@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Membership Cancellation · Pvolve</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --sand:#F3EEE7;--sand-deep:#EAE3D8;--ink:#1C1B19;--ink-soft:#5C574F;
+    --clay:#B15C3E;--clay-soft:#C97E62;--line:#DAD2C4;--white:#FBF9F5;--good:#6E7F5B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',-apple-system,system-ui,sans-serif;background:var(--sand);color:var(--ink);line-height:1.6;font-weight:300;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:660px;margin:0 auto;padding:0 24px}
+
+  header{padding:54px 0 10px;text-align:center}
+  .brand{font-family:'Jost',sans-serif;font-weight:600;letter-spacing:.26em;text-transform:uppercase;font-size:19px;color:var(--ink);padding-left:.26em}
+  .kicker{margin-top:40px;text-transform:uppercase;letter-spacing:.32em;font-size:11px;color:var(--clay);font-weight:400}
+  h1{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:clamp(38px,7vw,58px);line-height:1.06;margin-top:14px;letter-spacing:-.01em}
+  .sub{margin:20px auto 0;max-width:490px;color:var(--ink-soft);font-size:16.5px}
+
+  .policy{max-width:560px;margin:30px auto 0;background:var(--sand-deep);border:1px solid var(--line);border-radius:4px;padding:18px 22px;text-align:left}
+  .policy summary{cursor:pointer;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);font-weight:500;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  .policy summary::-webkit-details-marker{display:none}
+  .policy summary .plus{color:var(--clay);font-size:18px;transition:transform .2s}
+  .policy[open] summary .plus{transform:rotate(45deg)}
+  .policy .body{font-size:14px;color:var(--ink-soft);margin-top:14px;line-height:1.65}
+  .policy .body strong{color:var(--ink);font-weight:500}
+
+  .card{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:40px 36px;margin:36px 0;box-shadow:0 24px 60px -40px rgba(28,27,25,.35)}
+  .sectionhead{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:500;margin-bottom:4px}
+  .sectionsub{font-size:14px;color:var(--ink-soft);margin-bottom:26px}
+  hr.div{border:none;border-top:1px solid var(--line);margin:34px 0}
+
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .field{margin-bottom:24px}
+  .field:last-child{margin-bottom:0}
+  label.lbl{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);font-weight:500;margin-bottom:11px}
+  .req{color:var(--clay)}
+  input[type=text],input[type=email],input[type=tel],textarea{width:100%;font-family:inherit;font-size:16px;font-weight:300;color:var(--ink);background:var(--sand);border:1px solid var(--line);border-radius:3px;padding:14px 15px;transition:border-color .2s,background .2s}
+  input:focus,textarea:focus{outline:none;border-color:var(--clay);background:var(--white)}
+  textarea{resize:vertical;min-height:96px}
+  .hint{font-size:13px;color:var(--ink-soft);margin-top:7px}
+
+  .seg{display:grid;gap:10px}
+  .seg.cols2{grid-template-columns:repeat(2,1fr)}
+  .seg .opt{position:relative;border:1px solid var(--line);border-radius:3px;background:var(--sand);cursor:pointer;transition:all .17s;text-align:center;padding:18px 8px}
+  .seg .opt:hover{border-color:var(--clay-soft)}
+  .seg .opt input{position:absolute;opacity:0;pointer-events:none}
+  .seg .opt .locname{font-family:'Cormorant Garamond',serif;font-size:23px;line-height:1.1;display:block}
+  .seg .opt.sel{border-color:var(--clay);background:var(--white)}
+
+  .choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .chip{position:relative;border:1px solid var(--line);border-radius:3px;background:var(--sand);padding:14px 15px;cursor:pointer;transition:all .17s;font-size:14.5px;display:flex;align-items:center;gap:11px}
+  .chip:hover{border-color:var(--clay-soft)}
+  .chip input{position:absolute;opacity:0;pointer-events:none}
+  .chip .box{width:17px;height:17px;border:1.5px solid var(--line);border-radius:3px;flex-shrink:0;transition:all .17s;position:relative}
+  .chip.sel{border-color:var(--clay);background:var(--white)}
+  .chip.sel .box{border-color:var(--clay);background:var(--clay)}
+  .chip.sel .box::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:9px;border:solid var(--white);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+
+  .rate{margin-bottom:16px}
+  .rate:last-child{margin-bottom:0}
+  .rate .rlabel{font-size:14.5px;margin-bottom:8px;color:var(--ink)}
+  .scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .scale .s{position:relative;text-align:center;border:1px solid var(--line);border-radius:3px;background:var(--sand);padding:9px 4px;cursor:pointer;font-size:11.5px;color:var(--ink-soft);transition:all .15s}
+  .scale .s:hover{border-color:var(--clay-soft)}
+  .scale .s input{position:absolute;opacity:0;pointer-events:none}
+  .scale .s.sel{background:var(--ink);color:var(--white);border-color:var(--ink)}
+  .scale .s.sel.pos{background:var(--good);border-color:var(--good)}
+  .scale .s.sel.neg{background:var(--clay);border-color:var(--clay)}
+
+  .rangewrap{display:flex;align-items:center;gap:16px}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:2px;background:var(--line);border-radius:2px;flex:1}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--clay);cursor:pointer;border:3px solid var(--white);box-shadow:0 2px 8px rgba(28,27,25,.25)}
+  .rangeval{font-family:'Cormorant Garamond',serif;font-size:30px;width:38px;text-align:center;color:var(--clay)}
+
+  .ack{display:flex;gap:12px;align-items:flex-start;font-size:13.5px;color:var(--ink-soft);background:var(--sand);border:1px solid var(--line);border-radius:3px;padding:16px}
+  .ack input{margin-top:3px;width:16px;height:16px;accent-color:var(--clay);flex-shrink:0}
+  .sig{font-family:'Cormorant Garamond',serif;font-size:20px}
+
+  .btn{width:100%;background:var(--ink);color:var(--white);border:none;font-family:'Jost',sans-serif;font-weight:400;letter-spacing:.16em;text-transform:uppercase;font-size:13px;padding:18px;border-radius:3px;cursor:pointer;transition:background .2s,transform .1s}
+  .btn:hover{background:var(--clay)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line)}
+  .btn.ghost:hover{background:var(--sand);color:var(--ink)}
+
+  footer{text-align:center;padding:20px 0 60px;color:var(--ink-soft);font-size:12px;letter-spacing:.04em}
+
+  .nudge{display:none;position:fixed;inset:0;background:rgba(28,27,25,.55);z-index:60;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(3px)}
+  .nudge.show{display:flex;animation:fade .3s ease both}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  .nudge-card{background:var(--white);border-radius:6px;max-width:470px;width:100%;padding:44px 38px;text-align:center;box-shadow:0 40px 90px -30px rgba(28,27,25,.6);animation:rise .4s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  .nudge-card .kicker{margin-top:0}
+  .nudge-card h3{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:34px;line-height:1.1;margin:12px 0 14px}
+  .nudge-card p{color:var(--ink-soft);font-size:15.5px;margin-bottom:24px}
+  .perks{text-align:left;margin:0 auto 26px;max-width:320px}
+  .perks li{list-style:none;display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:15px}
+  .perks svg{width:17px;height:17px;stroke:var(--clay);fill:none;stroke-width:1.5;flex-shrink:0;margin-top:4px}
+  .nudge-card .btn{margin-bottom:12px}
+
+  .done{display:none;text-align:center;padding:70px 0}
+  .done.show{display:block;animation:rise .6s ease both}
+  .seal{width:74px;height:74px;border-radius:50%;border:1px solid var(--clay);margin:0 auto 26px;display:flex;align-items:center;justify-content:center}
+  .seal svg{width:30px;height:30px;stroke:var(--clay);fill:none;stroke-width:1.4}
+  .done h2{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:40px;margin-bottom:14px}
+  .done p{color:var(--ink-soft);max-width:440px;margin:0 auto;font-size:16px}
+
+  .proto{position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:var(--sand);font-size:11px;letter-spacing:.08em;text-align:center;padding:7px;opacity:.92;z-index:70}
+  @media(max-width:540px){.card{padding:30px 22px}.choices,.row2{grid-template-columns:1fr}.scale{gap:4px}.scale .s{font-size:10px;padding:8px 2px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="pvolve-logo.png" alt="PVOLVE" style="height:34px;width:auto;display:inline-block" />
+  </header>
+
+  <form id="form">
+    <div style="text-align:center">
+      <div class="kicker">Membership Cancellation Request</div>
+      <h1>Before you go &mdash;<br>tell us your why.</h1>
+      <p class="sub">We&rsquo;d hate to see you leave, but we understand life changes. Whatever the reason, your honesty helps us get better. This takes about a minute.</p>
+
+      <details class="policy">
+        <summary>Cancellation policy &mdash; the quick version <span class="plus">+</span></summary>
+        <div class="body">
+          You may cancel for any reason with <strong>30 days&rsquo; notice</strong>; cancellation takes effect on your next recurring auto-pay date, so notice given fewer than 30 days before that date means one more billing cycle. <strong>Medical cancellations</strong> may take effect immediately with a doctor&rsquo;s certification. You have 30 days from your last payment to use any remaining sessions.
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <!-- LOCATION -->
+      <div class="sectionhead">Which studio?</div>
+      <div class="sectionsub">Select your home studio so your request reaches the right team.</div>
+      <div class="field">
+        <div class="seg cols2" data-group="location">
+          <label class="opt"><input type="radio" name="location" value="Memorial" required /><span class="locname">Memorial</span></label>
+          <label class="opt"><input type="radio" name="location" value="Post Oak" /><span class="locname">Post Oak</span></label>
+        </div>
+      </div>
+
+      <hr class="div" />
+
+      <div class="sectionhead">Your details</div>
+      <div class="sectionsub">So we can find your membership and process your request.</div>
+
+      <div class="row2">
+        <div class="field"><label class="lbl">Full name <span class="req">*</span></label><input type="text" name="name" required placeholder="First and last" /></div>
+        <div class="field"><label class="lbl">Phone</label><input type="tel" name="phone" placeholder="(000) 000-0000" /></div>
+      </div>
+      <div class="field"><label class="lbl">Email <span class="req">*</span></label><input type="email" name="email" required placeholder="you@email.com" /></div>
+
+      <hr class="div" />
+
+      <div class="sectionhead">Why are you canceling?</div>
+      <div class="sectionsub">Check all that apply &mdash; the more we know, the better we can improve.</div>
+      <div class="choices" data-group="reason">
+        <label class="chip"><input type="checkbox" name="reason" value="Moving or Relocating" /><span class="box"></span>Moving or Relocating</label>
+        <label class="chip"><input type="checkbox" name="reason" value="No Time to Attend" /><span class="box"></span>No Time to Attend</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Financial" /><span class="box"></span>Financial</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Medical" /><span class="box"></span>Medical</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Seasonal Resident" /><span class="box"></span>Seasonal Resident</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Fitness Routine Change" /><span class="box"></span>Fitness Routine Change</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Convenient Classes Unavailable" /><span class="box"></span>Class Times Unavailable</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Upgrade/Downgrade" /><span class="box"></span>Upgrade / Downgrade</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Unsatisfied with Facility" /><span class="box"></span>Unsatisfied w/ Facility</label>
+        <label class="chip"><input type="checkbox" name="reason" value="Unsatisfied with Studio Team" /><span class="box"></span>Unsatisfied w/ Team</label>
+      </div>
+
+      <hr class="div" />
+
+      <div class="sectionhead">How have we been doing?</div>
+      <div class="sectionsub">Your honest read is the most valuable thing on this page.</div>
+      <div id="ratings"></div>
+
+      <hr class="div" />
+
+      <div class="field">
+        <label class="lbl">Was there anything we could have done differently?</label>
+        <textarea name="notes" placeholder="Optional &mdash; be as candid as you like. This goes straight to the studio owner."></textarea>
+      </div>
+
+      <div class="field">
+        <label class="lbl">Honestly &mdash; how likely are you to return someday?</label>
+        <div class="rangewrap"><input type="range" name="return_likelihood" min="1" max="10" value="5" id="range" /><span class="rangeval" id="rangeval">5</span></div>
+        <div class="hint">1 = never · 10 = almost certainly</div>
+      </div>
+
+      <hr class="div" />
+
+      <div class="field">
+        <label class="lbl">Sign to confirm <span class="req">*</span></label>
+        <input type="text" name="signature" required placeholder="Type your full name" class="sig" />
+      </div>
+      <label class="ack">
+        <input type="checkbox" name="acknowledged" required />
+        <span>I understand cancellation requires <strong>30 days&rsquo; notice</strong>, that any EFT remaining in the 30-day period will be billed, and that I have 30 days from my last payment to use any remaining sessions before they expire.</span>
+      </label>
+
+      <button type="submit" class="btn" style="margin-top:28px">Continue</button>
+    </div>
+  </form>
+
+  <!-- Freeze nudge -->
+  <div class="nudge" id="nudge">
+    <div class="nudge-card">
+      <div class="kicker">One gentle idea</div>
+      <h3>Would a pause feel better than goodbye?</h3>
+      <p>You don&rsquo;t have to decide today. Freeze your membership for as little as <strong>$25/month</strong> instead of your full rate &mdash; and pick right back up when you&rsquo;re ready.</p>
+      <ul class="perks">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Just $25 per 30 days, not your full membership</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Your current rate stays locked in</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Reactivate anytime &mdash; no re-signup, no fees</li>
+      </ul>
+      <button type="button" class="btn" id="chooseFreeze">Freeze Instead &mdash; Keep My Rate</button>
+      <button type="button" class="btn ghost" id="chooseCancel">No thanks, continue canceling</button>
+    </div>
+  </div>
+
+  <div class="done" id="done">
+    <div class="seal"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h2 id="doneTitle">Thank you for your honesty.</h2>
+    <p id="doneMsg">Your cancellation request has been received, <span id="doneName">friend</span>. Someone from the studio will confirm your effective date and take care of the rest. The door is always open &mdash; we&rsquo;d love to see you again.</p>
+  </div>
+
+  <footer>Pvolve &middot; The method that moves with you, for life.</footer>
+</div>
+
+<div class="proto">PROTOTYPE &mdash; responses are saved to this browser only. We&rsquo;ll connect email / spreadsheet + e-signature once you approve the look.</div>
+
+<script>
+  var cats=['Quality of Workout','Front Desk Customer Service','Convenient Class Times','Cleanliness of the Studio','Overall Experience'];
+  var opts=[['Great','pos'],['Good','pos'],['Fair',''],['Poor','neg'],['Unsatisfactory','neg']];
+  var rc=document.getElementById('ratings');
+  cats.forEach(function(c,ci){
+    var key='rate_'+ci;var div=document.createElement('div');div.className='rate';
+    div.innerHTML='<div class="rlabel">'+c+'</div><div class="scale">'+
+      opts.map(function(o){return '<label class="s '+o[1]+'"><input type="radio" name="'+key+'" value="'+o[0]+'">'+o[0]+'</label>';}).join('')+'</div>';
+    rc.appendChild(div);
+  });
+
+  function bindGroup(sel){
+    document.querySelectorAll(sel).forEach(function(inp){
+      inp.addEventListener('change',function(){
+        if(inp.type==='radio'){document.querySelectorAll('input[name="'+inp.name+'"]').forEach(function(o){o.closest('label').classList.toggle('sel',o.checked);});}
+        else{inp.closest('label').classList.toggle('sel',inp.checked);}
+      });
+    });
+  }
+  bindGroup('.seg input');bindGroup('.chip input');bindGroup('.scale input');
+
+  var range=document.getElementById('range'),rv=document.getElementById('rangeval');
+  range.addEventListener('input',function(){rv.textContent=range.value;});
+
+  var pending=null;
+  document.getElementById('form').addEventListener('submit',function(e){
+    e.preventDefault();
+    var fd=new FormData(e.target);var data={};
+    for(var pair of fd.entries()){var k=pair[0],v=pair[1];if(data[k]){data[k]=[].concat(data[k],v);}else{data[k]=v;}}
+    pending=data;
+    document.getElementById('nudge').classList.add('show');
+  });
+
+  function save(rec){
+    rec.submitted_at=new Date().toISOString();
+    try{var all=JSON.parse(localStorage.getItem('pvolve_submissions')||'[]');all.push(rec);localStorage.setItem('pvolve_submissions',JSON.stringify(all));}catch(_){}
+  }
+  function finish(){
+    document.getElementById('nudge').classList.remove('show');
+    document.getElementById('form').style.display='none';
+    var dn=document.getElementById('doneName');
+    if(dn){dn.textContent=(pending.name||'friend').split(' ')[0];}
+    document.getElementById('done').classList.add('show');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  document.getElementById('chooseCancel').addEventListener('click',function(){
+    pending.type='CANCEL';pending.freeze_offered=true;pending.chose_freeze=false;save(pending);finish();
+  });
+  document.getElementById('chooseFreeze').addEventListener('click',function(){
+    // carry the member's answers to the freeze form and let them finish there
+    var p=new URLSearchParams();
+    ['name','email','phone','location'].forEach(function(k){if(pending[k])p.append(k,pending[k]);});
+    if(pending.notes)p.append('notes',pending.notes);
+    if(pending.reason){[].concat(pending.reason).forEach(function(v){p.append('reason',v);});}
+    for(var k in pending){if(k.indexOf('rate_')===0)p.append(k,pending[k]);}
+    p.append('from','cancel');
+    window.location.href='freeze-form.html?'+p.toString();
+  });
+</script>
+</body>
+</html>

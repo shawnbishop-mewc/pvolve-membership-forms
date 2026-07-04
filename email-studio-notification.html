@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Studio Notification Email · Pvolve</title>
+<!--
+  ============================================================================
+  STUDIO MANAGER NOTIFICATION EMAIL  (sample shown: a CANCELLATION at Post Oak)
+  Merge fields the automation fills:
+    {{type_label}}      e.g. "Cancellation Request" / "Freeze Request"
+    {{is_cancel}}       true/false  -> controls the accent color band
+    {{is_converted}}    true/false  -> shows the green "SAVE" banner (cancel->freeze)
+    {{location}}        "Memorial" | "Post Oak"  -> also decides recipient address
+    {{name}} {{email}} {{phone}} {{submitted_at}}
+    {{freeze_start}} {{duration}}   (freeze only)
+    {{reasons[]}}       list of checked reasons
+    {{ratings}}         5 rows: category + Great/Good/Fair/Poor/Unsatisfactory
+    {{notes}}           free-text comment
+    {{return_likelihood}}  1-10
+    {{signature}} {{acknowledged}}
+  Subject line suggestion:  "Cancellation — {{name}} · {{location}}"
+  ============================================================================
+-->
+</head>
+<body style="margin:0;padding:0;background:#EAE3D8;font-family:Helvetica,Arial,sans-serif;color:#1C1B19;">
+  <!-- fake subject bar for preview only -->
+  <div style="max-width:600px;margin:0 auto;padding:16px 8px 0;font-size:12px;color:#5C574F;letter-spacing:.04em;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;">Preview of internal email &middot; Subject:</span>
+    <strong style="color:#1C1B19;">Cancellation Request &mdash; Sarah Mitchell &middot; Post Oak</strong>
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#EAE3D8;">
+    <tr><td align="center" style="padding:20px 12px 40px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#FBF9F5;border:1px solid #DAD2C4;border-radius:6px;overflow:hidden;">
+
+        <!-- logo header -->
+        <tr><td align="center" style="background:#1C1B19;padding:22px;">
+          <img src="pvolve-logo.png" alt="PVOLVE" width="150" style="display:block;filter:invert(1);height:auto;" />
+        </td></tr>
+
+        <!-- accent band: CLAY for cancellations -->
+        <tr><td style="background:#B15C3E;padding:14px 32px;color:#FBF9F5;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:bold;">
+          Membership Cancellation Request
+        </td></tr>
+
+        <!-- OPTIONAL green save banner (shown when a cancel converted to a freeze) -->
+        <!-- <tr><td style="background:#6E7F5B;padding:12px 32px;color:#fff;font-size:13px;">&#127881; <strong>Save!</strong> This member was cancelling and chose to <strong>freeze instead</strong>.</td></tr> -->
+
+        <!-- member headline -->
+        <tr><td style="padding:30px 32px 6px;">
+          <div style="font-family:Georgia,'Times New Roman',serif;font-size:30px;color:#1C1B19;line-height:1.1;">Sarah Mitchell</div>
+          <div style="margin-top:8px;font-size:14px;color:#5C574F;">
+            <strong style="color:#1C1B19;">Post Oak</strong> studio &middot; submitted Jul 3, 2026 at 2:14 PM
+          </div>
+        </td></tr>
+
+        <!-- action needed -->
+        <tr><td style="padding:16px 32px 0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F3EEE7;border-left:3px solid #B15C3E;border-radius:4px;">
+            <tr><td style="padding:14px 16px;font-size:13.5px;color:#1C1B19;">
+              <strong>Action needed:</strong> 30-day notice. Confirm the effective date, process in Mariana Tek, and follow up with the member.
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- contact -->
+        <tr><td style="padding:26px 32px 0;">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5C574F;font-weight:bold;padding-bottom:8px;">Contact</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:14px;">
+            <tr>
+              <td style="padding:4px 0;color:#5C574F;width:70px;">Email</td>
+              <td style="padding:4px 0;"><a href="mailto:sarah.mitchell@email.com" style="color:#B15C3E;text-decoration:none;">sarah.mitchell@email.com</a></td>
+            </tr>
+            <tr>
+              <td style="padding:4px 0;color:#5C574F;">Phone</td>
+              <td style="padding:4px 0;"><a href="tel:7135551234" style="color:#B15C3E;text-decoration:none;">(713) 555-1234</a></td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- reasons -->
+        <tr><td style="padding:26px 32px 0;">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5C574F;font-weight:bold;padding-bottom:10px;">Reason(s) given</div>
+          <span style="display:inline-block;background:#1C1B19;color:#FBF9F5;font-size:13px;padding:6px 13px;border-radius:20px;margin:0 6px 6px 0;">No Time to Attend</span>
+          <span style="display:inline-block;background:#1C1B19;color:#FBF9F5;font-size:13px;padding:6px 13px;border-radius:20px;margin:0 6px 6px 0;">Financial</span>
+          <span style="display:inline-block;background:#1C1B19;color:#FBF9F5;font-size:13px;padding:6px 13px;border-radius:20px;margin:0 6px 6px 0;">Convenient Classes Unavailable</span>
+        </td></tr>
+
+        <!-- ratings -->
+        <tr><td style="padding:26px 32px 0;">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5C574F;font-weight:bold;padding-bottom:10px;">How we performed</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:13.5px;border-collapse:collapse;">
+            <tr>
+              <td style="padding:9px 0;border-bottom:1px solid #EAE3D8;color:#1C1B19;">Quality of Workout</td>
+              <td align="right" style="padding:9px 0;border-bottom:1px solid #EAE3D8;"><span style="background:#6E7F5B;color:#fff;padding:4px 11px;border-radius:3px;font-size:12px;">Great</span></td>
+            </tr>
+            <tr>
+              <td style="padding:9px 0;border-bottom:1px solid #EAE3D8;color:#1C1B19;">Front Desk Customer Service</td>
+              <td align="right" style="padding:9px 0;border-bottom:1px solid #EAE3D8;"><span style="background:#6E7F5B;color:#fff;padding:4px 11px;border-radius:3px;font-size:12px;">Good</span></td>
+            </tr>
+            <tr>
+              <td style="padding:9px 0;border-bottom:1px solid #EAE3D8;color:#1C1B19;">Convenient Class Times</td>
+              <td align="right" style="padding:9px 0;border-bottom:1px solid #EAE3D8;"><span style="background:#B15C3E;color:#fff;padding:4px 11px;border-radius:3px;font-size:12px;">Poor</span></td>
+            </tr>
+            <tr>
+              <td style="padding:9px 0;border-bottom:1px solid #EAE3D8;color:#1C1B19;">Cleanliness of the Studio</td>
+              <td align="right" style="padding:9px 0;border-bottom:1px solid #EAE3D8;"><span style="background:#8A857B;color:#fff;padding:4px 11px;border-radius:3px;font-size:12px;">Fair</span></td>
+            </tr>
+            <tr>
+              <td style="padding:9px 0;color:#1C1B19;">Overall Experience</td>
+              <td align="right" style="padding:9px 0;"><span style="background:#8A857B;color:#fff;padding:4px 11px;border-radius:3px;font-size:12px;">Fair</span></td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- comment -->
+        <tr><td style="padding:26px 32px 0;">
+          <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5C574F;font-weight:bold;padding-bottom:10px;">In their words</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F3EEE7;border-radius:4px;">
+            <tr><td style="padding:16px 18px;font-family:Georgia,serif;font-style:italic;font-size:15px;color:#1C1B19;line-height:1.5;">
+              &ldquo;I love the workouts, but the 6am and 7pm slots are the only ones that fit my schedule and they&rsquo;re always full. If there were more evening classes I&rsquo;d stay in a heartbeat.&rdquo;
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- likelihood -->
+        <tr><td style="padding:26px 32px 0;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+              <td style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5C574F;font-weight:bold;">Likelihood to return</td>
+              <td align="right" style="font-family:Georgia,serif;font-size:24px;color:#B15C3E;">7<span style="font-size:15px;color:#5C574F;"> / 10</span></td>
+            </tr>
+          </table>
+        </td></tr>
+
+        <!-- signature -->
+        <tr><td style="padding:26px 32px 30px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #DAD2C4;">
+            <tr><td style="padding-top:18px;font-size:13px;color:#5C574F;">
+              Signed &mdash; <span style="font-family:Georgia,serif;font-style:italic;font-size:17px;color:#1C1B19;">Sarah Mitchell</span><br>
+              <span style="color:#6E7F5B;">&#10003; Acknowledged the cancellation policy &amp; 30-day terms</span>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <!-- footer -->
+        <tr><td style="background:#1C1B19;padding:18px 32px;color:#DAD2C4;font-size:11px;letter-spacing:.05em;text-align:center;">
+          Routed to the <strong style="color:#FBF9F5;">Post Oak</strong> team &middot; Pvolve member request system<br>
+          <span style="color:#8A857B;">The method that moves with you, for life.</span>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>
