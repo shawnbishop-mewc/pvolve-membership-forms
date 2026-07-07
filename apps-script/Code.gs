@@ -29,24 +29,24 @@ var CONFIG = {
   // per-studio manager inboxes and phone numbers.
   studios: {
     'Memorial': {
-      managerEmail: 'shawn.bishop@mewc.biz',       // >>> real Memorial manager inbox
-      fromEmail:    'memorial@pvolvehouston.com',   // verified sending address (Resend)
-      replyTo:      'memorial@pvolvehouston.com',   // set up forwarding, or use a monitored inbox
-      phone:        '(713) 555-0100',               // >>> real Memorial phone
+      managerEmail: 'shawn.bishop@mewc.biz',        // >>> real Memorial manager inbox
+      fromEmail:    'memorial@pvolvehouston.com',    // verified sending address (Resend)
+      replyTo:      'memorial@pvolvestudios.com',    // member replies land in this monitored inbox
+      phone:        '(713) 555-0100',                // >>> real Memorial phone
       senderName:   'Pvolve Memorial'
     },
     'Post Oak': {
-      managerEmail: 'shawn.bishop@mewc.biz',        // >>> real Post Oak manager inbox
-      fromEmail:    'postoak@pvolvehouston.com',
-      replyTo:      'postoak@pvolvehouston.com',
-      phone:        '(713) 555-0100',               // >>> real Post Oak phone
+      managerEmail: 'shawn.bishop@mewc.biz',         // >>> real Post Oak manager inbox
+      fromEmail:    'postoak@pvolvehouston.com',      // verified sending address (Resend)
+      replyTo:      'postoak@pvolvestudios.com',      // member replies land in this monitored inbox
+      phone:        '(713) 555-0100',                 // >>> real Post Oak phone
       senderName:   'Pvolve Post Oak'
     }
   },
   fallback: {   // used if a submission somehow has no/unknown location
     managerEmail: 'shawn.bishop@mewc.biz',
     fromEmail:    'hello@pvolvehouston.com',
-    replyTo:      'hello@pvolvehouston.com',
+    replyTo:      'memorial@pvolvestudios.com',
     phone:        '(713) 555-0100',
     senderName:   'Pvolve Studios'
   }

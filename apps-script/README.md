@@ -49,10 +49,10 @@ Emails send from your own domain through Resend. Setup:
    name `RESEND_API_KEY`, value = the key → Save.
 6. Run **`runTest`** — the emails now send from `@pvolvehouston.com`.
 
-**Reply-to / forwarding:** the `fromEmail` / `replyTo` addresses in CONFIG
-(`memorial@`, `postoak@`, `hello@pvolvehouston.com`) are sending addresses. If a member
-replies, set up **email forwarding** for those at your registrar, or change `replyTo` in
-CONFIG to an inbox you already monitor.
+**Send vs. reply:** emails **send from** `@pvolvehouston.com` (Resend-verified) but the
+**reply-to** points at the monitored studio inboxes — `memorial@` / `postoak@pvolvestudios.com`
+(your Microsoft 365 mailboxes). So member replies land where you already check; no forwarding
+needed. Reply-to on a different domain requires no DNS setup.
 
 **Fallback:** if `RESEND_API_KEY` isn't set, the script still works — it sends from the
 Google account that owns the script (display name = studio, reply-to = studio address).

@@ -74,8 +74,8 @@ Point `pvolvehouston.com` (or `forms.pvolvehouston.com`) at Netlify for links li
 
 - **Studio manager inboxes & phone numbers** — need the real values (see CONFIG).
 - **Resend** — create the account + verify `pvolvehouston.com` + set `RESEND_API_KEY` (step 3).
-- **Reply-to inbox** — decide where replies to `@pvolvehouston.com` land (forwarding or a
-  monitored inbox).
+- **Reply-to** — resolved: replies route to `memorial@` / `postoak@pvolvestudios.com`
+  (your monitored M365 inboxes). Confirm the Memorial address is correct.
 - **Branded URL** — optional; point `pvolvehouston.com` at Netlify (self-serve via your DNS).
 - **Mariana Tek** — whether to auto-update member records later (Phase 2/3), pending API access
   (the only remaining corporate item).
