@@ -36,16 +36,27 @@ In the Apps Script editor, select **`runTest`** from the function dropdown and c
 It adds a sample row and sends you both the manager and member emails so you can see them.
 Check the `Submissions` tab and your inbox.
 
-## About the "From" address (important)
-Until Pvolve corporate enables sending from `memorial@` / `postoak@pvolvestudios.com`,
-these emails send **from the Google account that owns this script**, with:
-- the **display name** set to "Pvolve Memorial" / "Pvolve Post Oak", and
-- **Reply-To** set to the studio address (so member replies still route correctly).
+## Email sending via Resend (from pvolvehouston.com)
+Emails send from your own domain through Resend. Setup:
 
-Once corporate grants sending (Microsoft Graph or the existing Mandrill setup — see
-`docs/corporate-it-request.md`), we switch the send step to the branded address.
-If you'd rather members not receive email from the Google account in the meantime,
-set `sendMemberEmail: false` (manager alerts still work).
+1. **Create a Resend account** at https://resend.com (free tier covers this volume).
+2. **Add your domain:** Domains → Add Domain → `pvolvehouston.com`.
+3. **Add the DNS records** Resend shows (DKIM CNAMEs, a send/SPF record, DMARC) at your
+   domain registrar. Wait for the domain to show **Verified** (usually minutes).
+4. **Create an API key:** API Keys → Create API Key → copy it.
+5. **Store the key in Apps Script** (never in code): in the editor, **Project Settings**
+   (gear) → **Script Properties** → **Add script property** →
+   name `RESEND_API_KEY`, value = the key → Save.
+6. Run **`runTest`** — the emails now send from `@pvolvehouston.com`.
+
+**Reply-to / forwarding:** the `fromEmail` / `replyTo` addresses in CONFIG
+(`memorial@`, `postoak@`, `hello@pvolvehouston.com`) are sending addresses. If a member
+replies, set up **email forwarding** for those at your registrar, or change `replyTo` in
+CONFIG to an inbox you already monitor.
+
+**Fallback:** if `RESEND_API_KEY` isn't set, the script still works — it sends from the
+Google account that owns the script (display name = studio, reply-to = studio address).
+Set `sendMemberEmail: false` if you don't want member emails during that interim.
 
 ## Quotas
 Gmail/consumer accounts can send ~100 emails/day; Google Workspace ~1,500/day.

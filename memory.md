@@ -40,13 +40,17 @@ calm, high-class; match the Pvolve brand.
 - **Vanilla static HTML/JS**, no framework/build — keeps it portable and dependency-free.
 
 ## Email decisions
-- Send **from the studio addresses** `memorial@` / `postoak@pvolvestudios.com`. Discovered
-  via DNS that the domain is on **Microsoft 365** and, notably, its **SPF already authorizes
-  Mandrill** — a likely fast path. But **corporate IT (`corpit@pvolve.com`) controls the
-  domain**, so branded sending is a corporate ask (drafted).
-- **Interim:** emails send from the Apps Script owner's Google account, with the studio name
-  as display and reply-to set to the studio address. `sendMemberEmail` can be turned off if
-  the interim sender is undesirable.
+- **Sending from `pvolvehouston.com` via Resend** (chosen). The user owns this domain and
+  controls its DNS, so this sidesteps corporate IT entirely for email. Resend picked for
+  lowest cost (free at this volume) + easiest setup + clean HTTP API that plugs into the
+  Apps Script backend. Send addresses: `memorial@`/`postoak@`/`hello@pvolvehouston.com`.
+  API key stored in Apps Script **Script Properties** (`RESEND_API_KEY`), never in code.
+  Considered Amazon SES (cheapest at scale but AWS complexity, not worth it here).
+- **Fallback:** if no Resend key is set, `sendEmail_` falls back to MailApp (the Google
+  account that owns the script). `sendMemberEmail` can be turned off during any interim.
+- _Earlier path (superseded):_ sending from `@pvolvestudios.com` on Microsoft 365 —
+  blocked by corporate IT control of that domain. DNS also revealed SPF authorizes Mandrill.
+  Kept as context; `pvolvehouston.com` + Resend is the live plan.
 - **Email HTML must be table+inline-style, no CSS filters.** The dark header needs a white
   logo, so `pvolve-logo-white.png` was generated (the CSS `invert` trick gets stripped by
   Gmail/Outlook — a black logo would've disappeared).

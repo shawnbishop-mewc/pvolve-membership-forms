@@ -18,26 +18,35 @@ var CONFIG = {
   sendManagerEmail: true,   // internal alert to the studio
   sendMemberEmail:  true,   // confirmation to the member
 
-  // Per-studio settings. Manager emails default to the owner so notifications
-  // work immediately; >>> replace with the real per-studio manager inboxes.
-  // Phone numbers are placeholders >>> set the real studio numbers.
+  // Emails send from your verified pvolvehouston.com domain via Resend.
+  // The Resend API key is read from Script Properties (key: RESEND_API_KEY) and is
+  // NOT stored in this file. If no key is set, the script falls back to MailApp (Gmail).
+  //
+  // fromEmail  = the verified sending address (any address @pvolvehouston.com).
+  // replyTo    = where member replies land — set up forwarding for these, or point
+  //              them at an inbox you already monitor.
+  // Manager emails default to the owner so alerts work immediately; >>> set the real
+  // per-studio manager inboxes and phone numbers.
   studios: {
     'Memorial': {
-      managerEmail: 'shawn.bishop@mewc.biz',     // >>> real Memorial manager inbox
-      replyTo:      'memorial@pvolvestudios.com', // where member replies should land
-      phone:        '(713) 555-0100',             // >>> real Memorial phone
+      managerEmail: 'shawn.bishop@mewc.biz',       // >>> real Memorial manager inbox
+      fromEmail:    'memorial@pvolvehouston.com',   // verified sending address (Resend)
+      replyTo:      'memorial@pvolvehouston.com',   // set up forwarding, or use a monitored inbox
+      phone:        '(713) 555-0100',               // >>> real Memorial phone
       senderName:   'Pvolve Memorial'
     },
     'Post Oak': {
-      managerEmail: 'shawn.bishop@mewc.biz',      // >>> real Post Oak manager inbox
-      replyTo:      'postoak@pvolvestudios.com',
-      phone:        '(713) 555-0100',             // >>> real Post Oak phone
+      managerEmail: 'shawn.bishop@mewc.biz',        // >>> real Post Oak manager inbox
+      fromEmail:    'postoak@pvolvehouston.com',
+      replyTo:      'postoak@pvolvehouston.com',
+      phone:        '(713) 555-0100',               // >>> real Post Oak phone
       senderName:   'Pvolve Post Oak'
     }
   },
   fallback: {   // used if a submission somehow has no/unknown location
     managerEmail: 'shawn.bishop@mewc.biz',
-    replyTo:      'memorial@pvolvestudios.com',
+    fromEmail:    'hello@pvolvehouston.com',
+    replyTo:      'hello@pvolvehouston.com',
     phone:        '(713) 555-0100',
     senderName:   'Pvolve Studios'
   }
@@ -92,23 +101,66 @@ function notify_(data) {
   var isFreeze = (data.type === 'FREEZE');
 
   if (CONFIG.sendManagerEmail && studio.managerEmail) {
-    MailApp.sendEmail({
+    sendEmail_({
       to: studio.managerEmail,
       replyTo: data.email || studio.replyTo,   // reply goes straight to the member
-      name: studio.senderName,
+      fromName: studio.senderName,
+      fromEmail: studio.fromEmail,
       subject: managerSubject_(data, isFreeze),
-      htmlBody: managerHtml_(data, isFreeze, studio)
+      html: managerHtml_(data, isFreeze, studio)
     });
   }
 
   if (CONFIG.sendMemberEmail && data.email) {
-    MailApp.sendEmail({
+    sendEmail_({
       to: data.email,
       replyTo: studio.replyTo,
-      name: studio.senderName,
+      fromName: studio.senderName,
+      fromEmail: studio.fromEmail,
       subject: memberSubject_(isFreeze),
-      htmlBody: isFreeze ? memberFreezeHtml_(data, studio) : memberCancelHtml_(data, studio)
+      html: isFreeze ? memberFreezeHtml_(data, studio) : memberCancelHtml_(data, studio)
     });
+  }
+}
+
+// Sends via Resend (from your pvolvehouston.com domain) when RESEND_API_KEY is set
+// in Script Properties; otherwise falls back to MailApp (the Gmail account).
+function sendEmail_(opts) {
+  if (resendSend_(opts)) return;
+  MailApp.sendEmail({
+    to: opts.to,
+    subject: opts.subject,
+    htmlBody: opts.html,
+    name: opts.fromName,
+    replyTo: opts.replyTo
+  });
+}
+
+function resendSend_(opts) {
+  var key = PropertiesService.getScriptProperties().getProperty('RESEND_API_KEY');
+  if (!key) return false;
+  try {
+    var payload = {
+      from: opts.fromName + ' <' + opts.fromEmail + '>',
+      to: [opts.to],
+      subject: opts.subject,
+      html: opts.html
+    };
+    if (opts.replyTo) payload.reply_to = opts.replyTo;
+    var res = UrlFetchApp.fetch('https://api.resend.com/emails', {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { Authorization: 'Bearer ' + key },
+      payload: JSON.stringify(payload),
+      muteHttpExceptions: true
+    });
+    var code = res.getResponseCode();
+    if (code >= 200 && code < 300) return true;
+    console.error('Resend error ' + code + ': ' + res.getContentText());
+    return false;
+  } catch (err) {
+    console.error('Resend exception: ' + err);
+    return false;
   }
 }
 

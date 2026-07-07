@@ -81,10 +81,15 @@ Rating: Overall Experience · Return Likelihood (1-10) · Comments · Signature 
 - **Location routing:** `location` decides the studio manager recipient in `Code.gs` CONFIG.
 - Reasons/ratings mirror the franchise-approved paper forms — keep the wording aligned.
 
+## Email sending
+- Emails send from **`pvolvehouston.com`** (a domain the user controls) via **Resend**.
+  The API key lives in Apps Script **Script Properties** (`RESEND_API_KEY`), never in code.
+  `sendEmail_` in `Code.gs` uses Resend when the key is set, else falls back to MailApp.
+- Send addresses: `memorial@`/`postoak@`/`hello@pvolvehouston.com`. Reply-to needs
+  forwarding or a monitored inbox.
+
 ## External dependencies / gatekeepers
 - **Pvolve corporate IT (`corpit@pvolve.com`)** controls `pvolvestudios.com` DNS + Microsoft
-  365. Needed for sending from `memorial@`/`postoak@pvolvestudios.com` (domain SPF already
-  authorizes **Mandrill**) and likely for **Mariana Tek** API access (their booking platform;
-  `integrations@marianatek.com`). See `docs/corporate-it-request.md`.
-- Until then, emails send from the Google account that owns the Apps Script (studio name as
-  display, reply-to set to the studio address).
+  365. Now only relevant for **Mariana Tek** API access (booking platform;
+  `integrations@marianatek.com`) — email no longer depends on corporate. See
+  `docs/corporate-it-request.md`.

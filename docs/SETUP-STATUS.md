@@ -52,26 +52,33 @@ Follow `apps-script/README.md`. Short version:
 - Studio **manager email** addresses (currently defaulted to yours so it works immediately).
 - Studio **phone numbers** (currently placeholders `(713) 555-0100`).
 
-### 3. Decide: member emails now, or wait for branded sending?
-Until corporate wires up `memorial@`/`postoak@pvolvestudios.com`, confirmation emails send
-**from your Google account** (with the studio name as the display name and reply-to set to
-the studio address). If you'd rather members not see that interim address, set
-`sendMemberEmail: false` in CONFIG for now — manager alerts still work. Your call.
+### 3. Set up Resend so emails send from pvolvehouston.com
+You own `pvolvehouston.com`, so this is self-serve (no corporate needed). Full steps are in
+`apps-script/README.md`. Short version: create a Resend account → add & verify
+`pvolvehouston.com` (add the DNS records) → create an API key → in Apps Script add a Script
+Property `RESEND_API_KEY` with that key. Then `runTest` sends from `@pvolvehouston.com`.
+Until the key is set, emails fall back to the Google account (or turn member emails off).
 
-### 4. Send the corporate IT email
-Open `docs/corporate-it-request.md`, add your name/phone, and send to `corpit@pvolve.com`.
-This unlocks: (a) sending from the real studio addresses, (b) Mariana Tek API access, and
-(c) an optional branded URL.
+### 4. (Optional) Corporate IT — Mariana Tek only now
+Since email is handled via your own domain, the corporate ask is now just **Mariana Tek API
+access** (if/when you want member records auto-updated). `docs/corporate-it-request.md` has
+the draft — trim it to the Mariana Tek section.
+
+### 5. (Optional) Branded form URL
+Point `pvolvehouston.com` (or `forms.pvolvehouston.com`) at Netlify for links like
+`pvolvehouston.com/freeze`. Also self-serve via your DNS — just ask and I'll give the steps.
 
 ---
 
 ## ❓ Open questions waiting on you / others
 
 - **Studio manager inboxes & phone numbers** — need the real values (see CONFIG).
-- **Corporate IT** — branded email sending + Mariana Tek API (email drafted).
-- **Branded URL** — e.g. `account.pvolvestudios.com` (needs a corporate DNS record), or we
-  register a domain you control. Optional; the `.netlify.app` URL works fine to launch.
-- **Mariana Tek** — whether to auto-update member records later (Phase 2/3), pending API access.
+- **Resend** — create the account + verify `pvolvehouston.com` + set `RESEND_API_KEY` (step 3).
+- **Reply-to inbox** — decide where replies to `@pvolvehouston.com` land (forwarding or a
+  monitored inbox).
+- **Branded URL** — optional; point `pvolvehouston.com` at Netlify (self-serve via your DNS).
+- **Mariana Tek** — whether to auto-update member records later (Phase 2/3), pending API access
+  (the only remaining corporate item).
 
 ---
 
