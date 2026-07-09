@@ -58,6 +58,18 @@ needed. Reply-to on a different domain requires no DNS setup.
 Google account that owns the script (display name = studio, reply-to = studio address).
 Set `sendMemberEmail: false` if you don't want member emails during that interim.
 
+## Interactive Dashboard
+`Dashboard.gs` rebuilds the Dashboard tab with **Studio** and **Time frame** dropdowns
+(and custom start/end dates). To apply it:
+1. In the Apps Script editor, add a new file: **Files → + → Script**, name it `Dashboard`,
+   and paste in `apps-script/Dashboard.gs`. Save.
+2. Select **`rebuildDashboard`** in the function dropdown → **Run** (authorize if asked).
+3. Open the **Dashboard** tab and use the two dropdowns at the top. Everything recalculates
+   live — no need to re-run the script after that.
+
+Re-running `rebuildDashboard` is safe; it only rebuilds the Dashboard tab (never Submissions).
+Week convention is Sunday–Saturday; change `WEEKDAY(...,1)` to `(...,2)` for Monday–Sunday.
+
 ## Quotas
 Gmail/consumer accounts can send ~100 emails/day; Google Workspace ~1,500/day.
 Freeze/cancel volume is far below that.
