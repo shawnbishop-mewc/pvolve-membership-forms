@@ -7,11 +7,13 @@ freeze and cancellation requests — with a focus on understanding *why* members
 links, what's done, and your remaining steps.
 
 ## Live site
-- Landing: https://pvolve-forms.netlify.app/
-- Freeze: https://pvolve-forms.netlify.app/freeze
-- Cancel: https://pvolve-forms.netlify.app/cancel
+**Branded links (share these with members):**
+- Freeze: https://forms.pvolvehouston.com/freeze
+- Cancel: https://forms.pvolvehouston.com/cancel
 
-Hosted on Netlify, auto-deployed from this repo's `main` branch.
+Also reachable at `pvolve-forms.netlify.app`. Hosted on Netlify, auto-deployed from this
+repo's `main` branch. `forms.pvolvehouston.com` is a CNAME to the Netlify site (HTTPS via
+Let's Encrypt, auto-renewed).
 
 ## What's here
 

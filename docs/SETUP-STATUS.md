@@ -4,10 +4,10 @@ _Last updated: overnight build. Read this first._
 
 ## Where it stands right now
 
-**The site is live** and both forms work end-to-end in the browser:
-- Landing: https://pvolve-forms.netlify.app/
-- Freeze: https://pvolve-forms.netlify.app/freeze  (also `/freeze-form.html`)
-- Cancel: https://pvolve-forms.netlify.app/cancel  (also `/cancel-form.html`)
+**The site is live** on the branded domain and both forms work end-to-end:
+- Freeze: https://forms.pvolvehouston.com/freeze
+- Cancel: https://forms.pvolvehouston.com/cancel
+- (Also at `pvolve-forms.netlify.app`; `/freeze-form.html` + `/cancel-form.html` still work.)
 
 Everything is in GitHub (**shawnbishop-mewc/pvolve-membership-forms**, private) and
 auto-deploys to Netlify on every push.
