@@ -59,8 +59,8 @@ function rebuildDashboard() {
   // sensible defaults for the custom cells so switching to Custom never errors
   var today = new Date();
   var monthAgo = new Date(); monthAgo.setDate(monthAgo.getDate() - 30);
-  sh.getRange('B5').setValue(monthAgo).setNumberFormat('yyyy-mm-dd');
-  sh.getRange('B6').setValue(today).setNumberFormat('yyyy-mm-dd');
+  sh.getRange('B5').setValue(monthAgo).setNumberFormat('mm/dd/yyyy');
+  sh.getRange('B6').setValue(today).setNumberFormat('mm/dd/yyyy');
 
   // computed period start (B7) / end (D7)
   sh.getRange('B7').setFormula(
@@ -70,7 +70,7 @@ function rebuildDashboard() {
     '$B$4="Last month",EOMONTH(TODAY(),-2)+1,' +
     '$B$4="This year",DATE(YEAR(TODAY()),1,1),' +
     '$B$4="All time",DATE(2000,1,1),' +
-    '$B$4="Custom",$B$5)').setNumberFormat('yyyy-mm-dd');
+    '$B$4="Custom",$B$5)').setNumberFormat('mm/dd/yyyy');
   sh.getRange('D7').setFormula(
     '=IFS($B$4="This week",TODAY()-WEEKDAY(TODAY(),1)+7,' +
     '$B$4="Last week",TODAY()-WEEKDAY(TODAY(),1)+1-1,' +
@@ -78,7 +78,7 @@ function rebuildDashboard() {
     '$B$4="Last month",EOMONTH(TODAY(),-1),' +
     '$B$4="This year",DATE(YEAR(TODAY()),12,31),' +
     '$B$4="All time",TODAY(),' +
-    '$B$4="Custom",$B$6)').setNumberFormat('yyyy-mm-dd');
+    '$B$4="Custom",$B$6)').setNumberFormat('mm/dd/yyyy');
 
   var r = 9;
   r = section(sh, r, 'VOLUME  (selected studio + period)');
