@@ -19,3 +19,5 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # Keep the forms out of search engines (share links directly only)
+    X-Robots-Tag = "noindex, nofollow, noarchive"
