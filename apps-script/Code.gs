@@ -18,6 +18,9 @@ var CONFIG = {
   sendManagerEmail: true,   // internal alert to the studio
   sendMemberEmail:  true,   // confirmation to the member
 
+  // Every studio-manager alert ALSO goes to these addresses (e.g. HQ), for both studios.
+  alwaysNotify: ['hto@pvolvestudios.com'],   // >>> confirm this address
+
   // Emails send from your verified pvolvehouston.com domain via Resend.
   // The Resend API key is read from Script Properties (key: RESEND_API_KEY) and is
   // NOT stored in this file. If no key is set, the script falls back to MailApp (Gmail).
@@ -30,6 +33,7 @@ var CONFIG = {
   studios: {
     'Memorial': {
       managerEmail: 'shawn.bishop@mewc.biz',        // >>> real Memorial manager inbox
+      studioEmail:  'memorial@pvolvestudios.com',    // studio inbox — also receives each alert
       fromEmail:    'memorial@pvolvehouston.com',    // verified sending address (Resend)
       replyTo:      'memorial@pvolvestudios.com',    // member replies land in this monitored inbox
       phone:        '(713) 555-0100',                // >>> real Memorial phone
@@ -37,6 +41,7 @@ var CONFIG = {
     },
     'Post Oak': {
       managerEmail: 'shawn.bishop@mewc.biz',         // >>> real Post Oak manager inbox
+      studioEmail:  'postoak@pvolvestudios.com',      // studio inbox — also receives each alert
       fromEmail:    'postoak@pvolvehouston.com',      // verified sending address (Resend)
       replyTo:      'postoak@pvolvestudios.com',      // member replies land in this monitored inbox
       phone:        '(713) 555-0100',                 // >>> real Post Oak phone
@@ -45,6 +50,7 @@ var CONFIG = {
   },
   fallback: {   // used if a submission somehow has no/unknown location
     managerEmail: 'shawn.bishop@mewc.biz',
+    studioEmail:  '',
     fromEmail:    'hello@pvolvehouston.com',
     replyTo:      'memorial@pvolvestudios.com',
     phone:        '(713) 555-0100',
@@ -100,15 +106,21 @@ function notify_(data) {
   var studio = CONFIG.studios[data.location] || CONFIG.fallback;
   var isFreeze = (data.type === 'FREEZE');
 
-  if (CONFIG.sendManagerEmail && studio.managerEmail) {
-    sendEmail_({
-      to: studio.managerEmail,
-      replyTo: data.email || studio.replyTo,   // reply goes straight to the member
-      fromName: studio.senderName,
-      fromEmail: studio.fromEmail,
-      subject: managerSubject_(data, isFreeze),
-      html: managerHtml_(data, isFreeze, studio)
-    });
+  if (CONFIG.sendManagerEmail) {
+    var recipients = [studio.managerEmail, studio.studioEmail]
+      .concat(CONFIG.alwaysNotify || [])
+      .filter(function (a) { return a; });                              // drop blanks
+    recipients = recipients.filter(function (a, i) { return recipients.indexOf(a) === i; }); // de-dupe
+    if (recipients.length) {
+      sendEmail_({
+        to: recipients,
+        replyTo: data.email || studio.replyTo,   // reply goes straight to the member
+        fromName: studio.senderName,
+        fromEmail: studio.fromEmail,
+        subject: managerSubject_(data, isFreeze),
+        html: managerHtml_(data, isFreeze, studio)
+      });
+    }
   }
 
   if (CONFIG.sendMemberEmail && data.email) {
@@ -128,7 +140,7 @@ function notify_(data) {
 function sendEmail_(opts) {
   if (resendSend_(opts)) return;
   MailApp.sendEmail({
-    to: opts.to,
+    to: Array.isArray(opts.to) ? opts.to.join(',') : opts.to,
     subject: opts.subject,
     htmlBody: opts.html,
     name: opts.fromName,
@@ -142,7 +154,7 @@ function resendSend_(opts) {
   try {
     var payload = {
       from: opts.fromName + ' <' + opts.fromEmail + '>',
-      to: [opts.to],
+      to: Array.isArray(opts.to) ? opts.to : [opts.to],
       subject: opts.subject,
       html: opts.html
     };
