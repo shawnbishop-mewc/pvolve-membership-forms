@@ -13,7 +13,7 @@
 // ===========================================================================
 var CONFIG = {
   timezone: 'America/Chicago',
-  logoWhite: 'https://pvolve-forms.netlify.app/pvolve-logo-white.png',
+  logoWhite: 'https://forms.pvolvehouston.com/pvolve-logo-white.png',
 
   sendManagerEmail: true,   // internal alert to the studio
   sendMemberEmail:  true,   // confirmation to the member
